@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ChatGPT镜像</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="website-lines-delay-detection.css">
+    <link rel="icon" href="favicon.png">
+</head>
+
+<body>
+    <div id="app" data-v-app="">
+        <div>
+            <h1 class="text-4xl mt-50 font-semibold text-center text-gray-800 dark:text-gray-600 ml-auto mr-auto mb-10 sm:mb-8 flex gap-2 items-center justify-center flex-grow">ChatGPT镜像<a href="https://github.com/muxinxy/website-lines-delay-detection"><span class="bg-yellow-200 text-yellow-900 py-0.5 px-1.5 text-xs md:text-sm rounded-md uppercase">源码</span></a></h1>
+            <ul id="lineList" role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <!-- 网站列表将在这里生成 -->
+            </ul>
+            <button id="goButton" type="button" class="inline-flex items-center bg-green-600 gap-x-2 rounded-md db-white px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-6" disabled> 立即前往 </button>
+        </div>
+    </div>
+    <script>
+    var sites = [
+        { name: 'ChatGPT API Demo - Vercel', url: 'https://chat.mxyz.tk/' },
+        { name: 'ChatGPT API Demo - Netlify', url: 'https://gptbot.netlify.app/' },
+        { name: 'ChatGPT Next Web - Vercel', url: 'https://ai.mxyz.tk/' },
+        { name: 'ChatGPT Next Web - Zeabur', url: 'https://ai-web.zeabur.app/' },
+        // 添加更多的线路
+    ];
+
+    var sitePingTimes = [];
+    var normalSitesCount = 0;
+    var checkedSitesCount = 0;
+
+    // 对网站进行排序，按照名称递增
+    // sites.sort((a, b) => a.name.localeCompare(b.name));
+
+    // 先显示所有的网站，延迟默认为?ms
+    sites.forEach((site, index) => {
+        document.getElementById('lineList').innerHTML += `<li id="site${index}" class="col-span-1 divide-y divide-gray-400 rounded-lg bg-white dark:bg-gray-600 shadow"><a href="${site.url}" class="flex w-full items-center justify-between space-x-6 p-6"><div class="flex-1 truncate"><div class="flex items-center space-x-3"><h3 class="truncate text-sm font-medium text-gray-900">${index+1}. ${site.name}</h3><span class="inline-flex flex-shrink-0 items-center rounded-full bg-green-50 px-1.5 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">?ms</span></div><p class="mt-1 truncate text-sm text-gray-500">${site.url}</p></div></a></li>`;
+    });
+
+    // 然后进行延迟检测
+    sites.forEach((site, index) => {
+        var startTime = new Date().getTime();
+        fetch(site.url, { mode: 'no-cors' }).then(() => {
+            var endTime = new Date().getTime();
+            var pingTime = endTime - startTime;
+            sitePingTimes.push({ name: site.name, url: site.url, ping: pingTime });
+
+            // 更新网站的延迟
+            document.getElementById(`site${index}`).innerHTML = `<a href="${site.url}" class="flex w-full items-center justify-between space-x-6 p-6"><div class="flex-1 truncate"><div class="flex items-center space-x-3"><h3 class="truncate text-sm font-medium text-gray-900">${index+1}. ${site.name}</h3><span class="inline-flex flex-shrink-0 items-center rounded-full bg-green-50 px-1.5 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">${pingTime}ms</span></div><p class="mt-1 truncate text-sm text-gray-500">${site.url}</p></div></a>`;
+            
+            normalSitesCount++;
+            checkedSitesCount++;
+
+            if (checkedSitesCount == sites.length && normalSitesCount > 0) {
+                document.getElementById('goButton').disabled = false;
+            }
+        }).catch(error => {
+            console.log(error);
+            document.getElementById(`site${index}`).innerHTML = `<a href="${site.url}" class="flex w-full items-center justify-between space-x-6 p-6"><div class="flex-1 truncate"><div class="flex items-center space-x-3"><h3 class="truncate text-sm font-medium text-gray-900">${index+1}. ${site.name}</h3><span class="inline-flex flex-shrink-0 items-center rounded-full bg-red-50 px-1.5 py-0.5 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/20">异常</span></div><p class="mt-1 truncate text-sm text-gray-500">${site.url}</p></div></a>`;
+
+            checkedSitesCount++;
+
+            if (checkedSitesCount == sites.length && normalSitesCount > 0) {
+                document.getElementById('goButton').disabled = false;
+            }
+        });
+    });
+
+    // 选择延时最低的网站进行跳转
+    document.getElementById('goButton').addEventListener('click', function() {
+        var minPingSite = sitePingTimes.reduce((min, p) => p.ping < min.ping ? p : min, sitePingTimes[0]);
+        window.location.href = minPingSite.url;
+    });
+    </script>
+</body>
+
+</html>
