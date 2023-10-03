@@ -32,7 +32,7 @@
 
     // 先显示所有的网站，延迟默认为?ms
     sites.forEach((site, index) => {
-        document.getElementById('lineList').innerHTML += `<li id="site${index}" class="col-span-1 divide-y divide-gray-400 rounded-lg bg-white dark:bg-gray-600 shadow"><div class="flex w-full items-center justify-between space-x-6 p-6"><div class="flex-1 truncate"><div class="flex items-center space-x-3"><h3 class="truncate text-sm font-medium text-gray-900">${site.name}</h3><span class="inline-flex flex-shrink-0 items-center rounded-full bg-green-50 px-1.5 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">?ms</span></div><p class="mt-1 truncate text-sm text-gray-500">${site.url}</p></div></div></li>`;
+        document.getElementById('lineList').innerHTML += `<li id="site${index}" class="col-span-1 divide-y divide-gray-400 rounded-lg bg-white dark:bg-gray-600 shadow"><a href="${site.url}" class="flex w-full items-center justify-between space-x-6 p-6"><div class="flex-1 truncate"><div class="flex items-center space-x-3"><h3 class="truncate text-sm font-medium text-gray-900">${site.name}</h3><span class="inline-flex flex-shrink-0 items-center rounded-full bg-green-50 px-1.5 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">?ms</span></div><p class="mt-1 truncate text-sm text-gray-500">${site.url}</p></div></a></li>`;
     });
 
     // 然后进行延迟检测
@@ -44,8 +44,8 @@
             sitePingTimes.push({ name: site.name, url: site.url, ping: pingTime });
 
             // 更新网站的延迟
-            document.getElementById(`site${index}`).innerHTML = `<div class="flex w-full items-center justify-between space-x-6 p-6"><div class="flex-1 truncate"><div class="flex items-center space-x-3"><h3 class="truncate text-sm font-medium text-gray-900">${site.name}</h3><span class="inline-flex flex-shrink-0 items-center rounded-full bg-green-50 px-1.5 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">${pingTime}ms</span></div><p class="mt-1 truncate text-sm text-gray-500">${site.url}</p></div></div>`;
-
+            document.getElementById(`site${index}`).innerHTML = `<a href="${site.url}" class="flex w-full items-center justify-between space-x-6 p-6"><div class="flex-1 truncate"><div class="flex items-center space-x-3"><h3 class="truncate text-sm font-medium text-gray-900">${site.name}</h3><span class="inline-flex flex-shrink-0 items-center rounded-full bg-green-50 px-1.5 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">${pingTime}ms</span></div><p class="mt-1 truncate text-sm text-gray-500">${site.url}</p></div></a>`;
+            
             normalSitesCount++;
             checkedSitesCount++;
 
@@ -54,7 +54,7 @@
             }
         }).catch(error => {
             console.log(error);
-            document.getElementById(`site${index}`).innerHTML = `<div class="flex w-full items-center justify-between space-x-6 p-6"><div class="flex-1 truncate"><div class="flex items-center space-x-3"><h3 class="truncate text-sm font-medium text-gray-900">${site.name}</h3><span class="inline-flex flex-shrink-0 items-center rounded-full bg-red-50 px-1.5 py-0.5 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/20">异常</span></div><p class="mt-1 truncate text-sm text-gray-500">${site.url}</p></div></div>`;
+            document.getElementById(`site${index}`).innerHTML = `<a href="${site.url}" class="flex w-full items-center justify-between space-x-6 p-6"><div class="flex-1 truncate"><div class="flex items-center space-x-3"><h3 class="truncate text-sm font-medium text-gray-900">${site.name}</h3><span class="inline-flex flex-shrink-0 items-center rounded-full bg-red-50 px-1.5 py-0.5 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/20">异常</span></div><p class="mt-1 truncate text-sm text-gray-500">${site.url}</p></div></a>`;
 
             checkedSitesCount++;
 
