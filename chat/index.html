@@ -12,19 +12,21 @@
 <body>
     <div id="app" data-v-app="">
         <div>
-            <h1 class="text-4xl mt-50 font-semibold text-center text-gray-800 dark:text-gray-600 ml-auto mr-auto mb-10 sm:mb-8 flex gap-2 items-center justify-center flex-grow">ChatGPT网站-基于API<a href="https://github.com/muxinxy/website-lines-delay-detection"><span class="bg-yellow-200 text-yellow-900 py-0.5 px-1.5 text-xs md:text-sm rounded-md uppercase">源码</span></a></h1>
+            <h1 class="text-4xl mt-50 font-semibold text-center text-gray-800 dark:text-gray-600 ml-auto mr-auto mb-10 sm:mb-8 flex gap-2 items-center justify-center flex-grow">AI Chat-人工智能聊天<a href="https://github.com/muxinxy/website-lines-delay-detection"><span class="bg-yellow-200 text-yellow-900 py-0.5 px-1.5 text-xs md:text-sm rounded-md uppercase">源码</span></a></h1>
             <ul id="lineList" role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 <!-- 网站列表将在这里生成 -->
             </ul>
-            <button id="goButton" type="button" class="inline-flex items-center bg-green-600 gap-x-2 rounded-md db-white px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-6" disabled> 立即前往 </button>
+            <button id="backButton" type="button" class="inline-flex items-center bg-green-600 gap-x-2 rounded-md db-white px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-6" > 返回首页 </button>
+            <button id="goButton" type="button" class="inline-flex items-center bg-green-600 gap-x-2 rounded-md db-white px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-6" disabled> 前往导航 </button>
         </div>
     </div>
     <script>
     var sites = [
-        { name: 'ChatGPT API Demo - Vercel', url: 'https://chat.mxyz.tk/' },
-        { name: 'ChatGPT API Demo - Netlify', url: 'https://gptbot.netlify.app/' },
-        { name: 'ChatGPT Next Web - Vercel', url: 'https://ai.mxyz.tk/' },
-        { name: 'ChatGPT Next Web - Zeabur', url: 'https://ai-web.zeabur.app/' },
+        { name: 'Chatbot 3.5 🆓', url: 'https://chatbot.999875.xyz/' },
+        { name: 'GeminiPro 🆓', url: 'https://gp.999875.xyz/' },
+        { name: 'NextChat 3.5 🔒', url: 'https://3.999875.xyz/' },
+        { name: 'NextChat 4.0 🔒', url: 'https://4.999875.xyz/' },
+        { name: 'LobeChat 4.0 🔒', url: 'https://lobe.999875.xyz/' },
         // 添加更多的线路
     ];
 
@@ -71,11 +73,15 @@
         });
     }
 
+    document.getElementById('backButton').addEventListener('click', function() {
+        window.location.href = 'https://muxinxy.com';
+    });
 
     // 选择延时最低的网站进行跳转
     document.getElementById('goButton').addEventListener('click', function() {
-        var minPingSite = sitePingTimes.reduce((min, p) => p.ping < min.ping ? p : min, sitePingTimes[0]);
-        window.location.href = minPingSite.url;
+        // var minPingSite = sitePingTimes.reduce((min, p) => p.ping < min.ping ? p : min, sitePingTimes[0]);
+        // window.location.href = minPingSite.url;
+        window.location.href = 'https://nav.muxinxy.com';
     });
     </script>
 </body>
